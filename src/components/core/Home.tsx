@@ -16,15 +16,14 @@ export const Home: FC = () => {
   const realData = () => {
     //example Data
     let listOfTasks: Array<ITask> = [
-      {name: 'z1',period: 25,processingTime: 8,deadline: 25},
-      {name: 'z2',period: 25,processingTime: 7,deadline: 25},
       {name: 'z3',period: 50,processingTime: 4,deadline: 50},
+      {name: 'z1',period: 25,processingTime: 8,deadline: 25},
+      {name: 'z5',period: 100,processingTime: 6,deadline: 100},
       {name: 'z4',period: 50,processingTime: 4,deadline: 50},
-      {name: 'z5',period: 100,processingTime: 10,deadline: 100}
+      {name: 'z2',period: 25,processingTime: 7,deadline: 25}
     ]
 
-    const taskGroup = new TaskGroup();
-    taskGroup.SetTaskList(listOfTasks);
+    const taskGroup = new TaskGroup(listOfTasks);
 
     //TODO: this is the main function that will parse input data to chart payload
     mockInputData.forEach(task => {
