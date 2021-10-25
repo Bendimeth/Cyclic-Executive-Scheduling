@@ -1,3 +1,4 @@
+import React from 'react';
 import logo from './logo.svg';
 import {Home} from './components/core/Home'
 import './App.css';
