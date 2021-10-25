@@ -1,15 +1,8 @@
-import { ChartOptions } from 'chart.js';
+import { taskColor } from 'components/utils/mocks';
 import React, { FC } from 'react';
-import { Bar } from 'react-chartjs-2'
 import styled, { css } from 'styled-components';
 
-const taskColor: any = {
-  a: 'green',
-  b: 'red',
-  c: 'orange'
-}
-
-interface IChartData {
+export interface IChartData {
   majorCycle: number;
   cycles: {
     from: number;
@@ -104,76 +97,11 @@ const Period = styled.div<{ isEnd?: boolean }>`
   `}
 `;
 
-export const Chart: FC = () => {
+interface IChartProps {
+  data: IChartData;
+}
 
-  const mockData: IChartData = {
-    majorCycle: 100,
-    cycles: [{
-      from: 0,
-      to: 25,
-      tasks: [{
-        name: 'a',
-        from: 0,
-        to: 8
-      }, {
-        name: 'b',
-        from: 8,
-        to: 14
-      }, {
-        name: 'c',
-        from: 16,
-        to: 26
-      }]
-    }, {
-      from: 25,
-      to: 50,
-      tasks: [{
-        name: 'a',
-        from: 26,
-        to: 35
-      }, {
-        name: 'b',
-        from: 34,
-        to: 42
-      }, {
-        name: 'c',
-        from: 42,
-        to: 50
-      }]
-    }, {
-      from: 50,
-      to: 75,
-      tasks: [{
-        name: 'a',
-        from: 50,
-        to: 58
-      }, {
-        name: 'b',
-        from: 58,
-        to: 66
-      }, {
-        name: 'c',
-        from: 66,
-        to: 74
-      }]
-    }, {
-      from: 75,
-      to: 100,
-      tasks: [{
-        name: 'a',
-        from: 74,
-        to: 82
-      }, {
-        name: 'b',
-        from: 82,
-        to: 90
-      }, {
-        name: 'c',
-        from: 90,
-        to: 98
-      }]
-    }]
-  }
+export const Chart: FC<IChartProps> = ({ data }) => {
 
   return (
     <ChartWrapper>
@@ -182,12 +110,12 @@ export const Chart: FC = () => {
       </div>
       <MajorCycleWrapper>
         <MajorCycle>
-          {mockData.cycles.map(cycle => (
+          {data.cycles.map(cycle => (
             <MinorCycle
               key={cycle.from}
               width={cycle.to - cycle.from}
               isStart={cycle.from === 0}
-              isEnd={cycle.to === mockData.majorCycle}
+              isEnd={cycle.to === data.majorCycle}
             >
               <Period>{cycle.from}</Period>
               {cycle.tasks.map(task => (
@@ -203,7 +131,7 @@ export const Chart: FC = () => {
             </MinorCycle>
 
           ))}
-          <Period isEnd>{mockData.majorCycle}</Period>
+          <Period isEnd>{data.majorCycle}</Period>
         </MajorCycle>
       </MajorCycleWrapper>
 
