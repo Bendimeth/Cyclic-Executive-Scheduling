@@ -1,9 +1,11 @@
 import { IChartData } from "components/core/Chart"
 
 export const taskColor: any = {
-  a: 'green',
-  b: 'red',
-  c: 'orange'
+  z1: 'green',
+  z2: 'red',
+  z3: 'orange',
+  z4: 'blue',
+  z5: 'pink'
 }
 
 export const mockInputData = [

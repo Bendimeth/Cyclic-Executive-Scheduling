@@ -24,20 +24,17 @@ export const Home: FC = () => {
     ]
 
     const taskGroup = new TaskGroup(listOfTasks);
-
-    //TODO: this is the main function that will parse input data to chart payload
-    mockInputData.forEach(task => {
-      //...
-    })
+    return taskGroup.PrepairChartData();
   }
 
-  realData();
+  let dataForChart = realData();
+  console.log(dataForChart);
 
   return (
     <HomeWrapper>
       <header>Home component head</header>
       <Chart
-        data={mockChartkData} // TODO: replace this mock data with real one
+        data={dataForChart} // TODO: replace this mock data with real one
       />
     </HomeWrapper>
   )
