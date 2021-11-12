@@ -1,5 +1,5 @@
 import { taskColor } from 'components/utils/mocks';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 export interface IChartData {
@@ -98,10 +98,19 @@ const Period = styled.div<{ isEnd?: boolean }>`
 `;
 
 interface IChartProps {
-  data: IChartData;
+  data: IChartData | undefined;
 }
 
 export const Chart: FC<IChartProps> = ({ data }) => {
+  const [cycles, setCycles] = useState<IChartData[]>([]);
+
+  useEffect(() => {
+    setCycles(data ? [data] : []);
+  }, [data])
+
+  const addCycle = () => {
+    setCycles([...cycles, cycles[0]]);
+  }
 
   return (
     <ChartWrapper>
@@ -109,33 +118,37 @@ export const Chart: FC<IChartProps> = ({ data }) => {
         <h1 className='title'>Vertical Bar Chart</h1>
       </div>
       <MajorCycleWrapper>
-        <MajorCycle>
-          {data.cycles.map(cycle => (
-            <MinorCycle
-              key={cycle.from}
-              width={cycle.to - cycle.from}
-              isStart={cycle.from === 0}
-              isEnd={cycle.to === data.majorCycle}
-            >
-              <Period>{cycle.from}</Period>
-              {cycle.tasks.map(task => (
-                <TaskTile
-                  key={cycle.from + task.name}
-                  width={task.to - task.from}
-                  offset={task.from}
-                  name={task.name}
-                >
-                  {task.name}
-                </TaskTile>
-              ))}
-            </MinorCycle>
+        {cycles.map((iteration, idx) => (
 
-          ))}
-          <Period isEnd>{data.majorCycle}</Period>
-        </MajorCycle>
+          <MajorCycle
+            key={idx}
+          >
+            {iteration.cycles.map(cycle => (
+              <MinorCycle
+                key={cycle.from}
+                width={cycle.to - cycle.from}
+                isStart={cycle.from === 0}
+                isEnd={cycle.to === iteration.majorCycle}
+              >
+                <Period>{cycle.from}</Period>
+                {cycle.tasks.map(task => (
+                  <TaskTile
+                    key={cycle.from + task.name}
+                    width={task.to - task.from}
+                    offset={task.from}
+                    name={task.name}
+                  >
+                    {task.name}
+                  </TaskTile>
+                ))}
+              </MinorCycle>
+
+            ))}
+            <Period isEnd>{iteration.majorCycle}</Period>
+          </MajorCycle>
+        ))
+        }
       </MajorCycleWrapper>
-
-
     </ChartWrapper>
   );
 }
