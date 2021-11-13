@@ -21,7 +21,6 @@ export const Home: FC = () => {
 
   return (
     <HomeWrapper>
-      <header>Home component head</header>
       <Inputs
         setData={setInputData}
       />

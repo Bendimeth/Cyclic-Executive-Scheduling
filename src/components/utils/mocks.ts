@@ -5,7 +5,12 @@ export const taskColor: any = {
   z2: 'red',
   z3: 'orange',
   z4: 'blue',
-  z5: 'pink'
+  z5: 'pink',
+  z6: 'lime',
+  z7: 'yellow',
+  z8: 'olive',
+  z9: 'cyan',
+  z10: 'magenta'
 }
 
 export const mockInputData = [
