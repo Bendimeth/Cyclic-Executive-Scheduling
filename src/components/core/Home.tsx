@@ -14,9 +14,12 @@ const HomeWrapper = styled.div`
 export const Home: FC = () => {
   const [inputData, setInputData] = useState<ITask[]>([]);
   const [chartData, setChartData] = useState<IChartData>();
+  const [cpuUsage, setCpuUsage] = useState<number>(0);
 
   useEffect(() => {
-    setChartData(new TaskGroup(inputData).PrepairChartData());
+    const dataInstance = new TaskGroup(inputData);
+    setChartData(dataInstance.PrepairChartData());
+    setCpuUsage(dataInstance.SerializationCondition());
   }, [inputData]);
 
   return (
@@ -25,6 +28,7 @@ export const Home: FC = () => {
         setData={setInputData}
       />
       <Chart
+        utilizationFactor={cpuUsage}
         data={chartData}
       />
     </HomeWrapper>

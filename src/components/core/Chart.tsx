@@ -20,6 +20,7 @@ const ChartWrapper = styled.div`
     width: 100%;
     box-sizing: border-box;
     font-weight: 600;
+    position: relative;
 `;
 
 const MajorCycleWrapper = styled.div`
@@ -126,11 +127,26 @@ const ShowMoreButton = styled.button`
   }
 `;
 
+const UtilFactor = styled.div`
+  position: absolute;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  background: #0001;
+  top: 0;
+  font-weight: 500;
+  left: 50px;
+  .util-factor {
+    font-weight: 600;
+  }
+`;
+
 interface IChartProps {
   data: IChartData | undefined;
+  utilizationFactor: number;
 }
 
-export const Chart: FC<IChartProps> = ({ data }) => {
+export const Chart: FC<IChartProps> = ({ data, utilizationFactor }) => {
   const [cycles, setCycles] = useState<IChartData[]>([]);
 
   useEffect(() => {
@@ -151,6 +167,10 @@ export const Chart: FC<IChartProps> = ({ data }) => {
             <h1 className='title'>Szeregowanie zadań cyklicznych</h1>
           </div>
           <ShowMoreButton onClick={addCycle}>Dodaj kolejny cykl</ShowMoreButton>
+          <UtilFactor>
+            <div>Współczynnik wykorzystania procesora:</div>
+            <div className="util-factor">{utilizationFactor.toFixed(2)}</div>
+          </UtilFactor>
         </>
       }
       <MajorCycleWrapper>
