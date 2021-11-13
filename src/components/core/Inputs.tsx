@@ -44,7 +44,7 @@ const TaskName = styled.div`
   left: -30px;
 `;
 
-const TaskColor = styled.div<{bgColor: string}>`
+const TaskColor = styled.div<{ bgColor: string }>`
   width: 25px;
   height: 25px;
   opacity: .9;
@@ -78,7 +78,7 @@ const AddButton = styled.button`
   }
 `;
 
-const RenderButton = styled.button<{disabled: boolean}>`
+const RenderButton = styled.button<{ disabled: boolean }>`
   text-decoration: none;
   border: none;
   border-radius: 5px;
@@ -88,6 +88,19 @@ const RenderButton = styled.button<{disabled: boolean}>`
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   background: rgba(0,0,0, .1);
   margin: .5rem auto 0 auto;
+  cursor: pointer;
+`;
+
+const DeleteButton = styled.button`
+  position: absolute;
+  font-weight: 500;
+  font-size: 12px;
+  left: 0px;
+  padding: 3px 5px;
+  bottom: -30px;
+  border: 1px solid rgba(255, 0, 0, .5);
+  background: rgba(255, 0, 0, .1);
+  border-radius: 5px;
   cursor: pointer;
 `;
 
@@ -115,14 +128,18 @@ export const Inputs: FC<IInputProps> = ({ setData }) => {
     ])
   }
 
+  const deleteItem = () => {
+    setTasks([...tasks].slice(0, -1));
+  }
+
   const updateInputValue = (inputIdx: number, field: string, event: ChangeEvent<HTMLInputElement>) => {
     const value = Number(event.target.value);
     if (!isNaN(value)) {
       setTasks(tasks.map((el, idx) => idx === inputIdx ?
-      {
-        ...el,
-        [field]: value
-      } : el))
+        {
+          ...el,
+          [field]: value
+        } : el))
     }
   }
 
@@ -166,6 +183,9 @@ export const Inputs: FC<IInputProps> = ({ setData }) => {
           <TaskColor
             bgColor={taskColor[el.name]}
           ></TaskColor>
+          {(tasks?.length > 1 && idx === tasks.length - 1) &&
+            <DeleteButton onClick={deleteItem}>Usuń</DeleteButton>
+          }
         </SingleElementWrapper>
       ))}
       <AddButton
